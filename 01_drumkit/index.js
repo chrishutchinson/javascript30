@@ -43,7 +43,8 @@ customElements.define('drum-key', class extends HTMLElement {
 
         :host li.key span {
           letter-spacing: 0.1em;
-          font-size: 0.7rem;
+          font-size: 0.6rem;
+          color: goldenrod;
         }
       </style>
       <li class="key" data-key="${this.key}">
@@ -60,7 +61,7 @@ customElements.define('drum-key', class extends HTMLElement {
 
     // Setup an event listener when a key is pressed
     window.addEventListener('keydown', e => {
-      if(e.keyCode === this.key) {
+      if(e.keyCode === this.key && this.active === false) {
         this.audioPlayer.currentTime = 0;
         this.audioPlayer.play();
         this.active = true;

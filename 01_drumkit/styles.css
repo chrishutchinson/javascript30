@@ -1,15 +1,23 @@
 html, body {
+  height: 100%;
+}
+
+body {
   margin: 0;
   padding: 0;
+  background: url(http://i.imgur.com/b9r5sEL.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 main.drum-kit {
-  padding: 4rem;
+  display: flex;
+  height: 100%;
 }
 
 main.drum-kit ul {
+  margin: auto;
   list-style-type: none;
-  margin: 0;
   padding: 0;
   text-align: center;
 }
