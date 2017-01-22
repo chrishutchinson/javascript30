@@ -21,7 +21,7 @@ customElements.define('clock-hand', class extends HTMLElement {
         position: absolute;
         top: 0;
         left: 0;
-        transition: all 0.08s cubic-bezier(.45,1.1,.97,1.3);
+        transition: all 0.05s cubic-bezier(0, 3.32, 1, 1);
       }
 
       :host div.second {
@@ -82,17 +82,7 @@ customElements.define('clock-face', class extends HTMLElement {
     };
 
     setInterval(() => {
-      const now = new Date;
-
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      let seconds = now.getSeconds();
-
-      if(hours >= 12) {
-        hours = hours - 12;
-      }
-
-      hours = hours * 5;
+      const { hours, minutes, seconds } = this.calculateTime(new Date);
 
       this.hands.hour.setAttribute('tick', hours);
       this.hands.minute.setAttribute('tick', minutes);
@@ -100,7 +90,23 @@ customElements.define('clock-face', class extends HTMLElement {
     }, 1000);
   }
 
+  calculateTime(now) {
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    if(hours >= 12) {
+      hours = hours - 12;
+    }
+
+    hours = hours * 5;
+
+    return { hours, minutes, seconds };
+  }
+
   render() {
+    const { hours, minutes, seconds } = this.calculateTime(new Date);
+
     this.shadowRoot.innerHTML = `
       <style>
       :host div.face {
@@ -125,9 +131,9 @@ customElements.define('clock-face', class extends HTMLElement {
       }
       </style>
       <div class="face">
-        <clock-hand tick="0" type="minute"></clock-hand>
-        <clock-hand tick="0" type="hour"></clock-hand>
-        <clock-hand tick="0" type="second"></clock-hand>
+        <clock-hand tick="${minutes}" type="minute"></clock-hand>
+        <clock-hand tick="${hours}" type="hour"></clock-hand>
+        <clock-hand tick="${seconds}" type="second"></clock-hand>
       </div>
     `;
   }
